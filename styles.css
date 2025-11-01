@@ -1396,7 +1396,7 @@ section {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.5s ease, opacity 0.3s ease;
     background: linear-gradient(
         135deg, 
         rgba(255, 102, 0, 0.08) 0%, 
@@ -1404,9 +1404,9 @@ section {
         rgba(255, 102, 0, 0.08) 100%
     );
     background-size: 200% 200%;
-    animation: shimmer 2s ease-in-out infinite;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
+    opacity: 1;
 }
 
 @keyframes shimmer {
@@ -1415,20 +1415,6 @@ section {
     }
     50% {
         background-position: 100% 50%;
-    }
-}
-
-.gallery-image[loading="lazy"] {
-    opacity: 0;
-}
-
-.gallery-image.loaded {
-    animation: fadeIn 0.5s ease forwards;
-}
-
-@keyframes fadeIn {
-    to {
-        opacity: 1;
     }
 }
 
@@ -1653,17 +1639,10 @@ section {
         rgba(255, 102, 0, 0.08) 100%
     );
     background-size: 200% 200%;
-    animation: shimmer 2s ease-in-out infinite;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
-}
-
-.car-image[loading="lazy"] {
-    opacity: 0;
-}
-
-.car-image.loaded {
-    animation: fadeIn 0.5s ease forwards;
+    transition: opacity 0.3s ease;
+    opacity: 1;
 }
 
 .car-info {

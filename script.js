@@ -757,20 +757,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadCars();
     
     // Wait for images and layout to be ready
-    // Add load event listeners to all images for smooth fade-in
-    const images = document.querySelectorAll('img[loading="lazy"]');
-    images.forEach(img => {
-        if (img.complete) {
-            img.classList.add('loaded');
-            img.style.animation = 'none';
-        } else {
-            img.addEventListener('load', function() {
-                this.classList.add('loaded');
-                this.style.animation = 'none';
-            });
-        }
-    });
-    
     if (document.readyState === 'complete') {
         // Page is already fully loaded
         initMobileCarousels();
