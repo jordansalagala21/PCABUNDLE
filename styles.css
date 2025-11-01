@@ -602,6 +602,19 @@ html {
     color: var(--white);
     font-size: 1.5rem;
     cursor: pointer;
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1001;
+}
+
+.mobile-menu-toggle:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.mobile-menu-toggle:active {
+    transform: scale(0.95);
 }
 
 /* Hero Section */
@@ -1384,6 +1397,39 @@ section {
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
+    background: linear-gradient(
+        135deg, 
+        rgba(255, 102, 0, 0.08) 0%, 
+        rgba(255, 102, 0, 0.03) 50%,
+        rgba(255, 102, 0, 0.08) 100%
+    );
+    background-size: 200% 200%;
+    animation: shimmer 2s ease-in-out infinite;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+@keyframes shimmer {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.gallery-image[loading="lazy"] {
+    opacity: 0;
+}
+
+.gallery-image.loaded {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
 }
 
 .gallery-item:hover .gallery-image {
@@ -1600,7 +1646,24 @@ section {
     width: 100%;
     height: 220px;
     object-fit: cover;
-    background-color: var(--medium-gray);
+    background: linear-gradient(
+        135deg, 
+        rgba(255, 102, 0, 0.08) 0%, 
+        rgba(255, 102, 0, 0.03) 50%,
+        rgba(255, 102, 0, 0.08) 100%
+    );
+    background-size: 200% 200%;
+    animation: shimmer 2s ease-in-out infinite;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+.car-image[loading="lazy"] {
+    opacity: 0;
+}
+
+.car-image.loaded {
+    animation: fadeIn 0.5s ease forwards;
 }
 
 .car-info {
@@ -1777,9 +1840,8 @@ section {
 
 /* Team Section */
 .team-section {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 3rem;
+    display: flex;
+    justify-content: center;
     margin: 4rem 0;
     position: relative;
     z-index: 1;
@@ -1798,6 +1860,8 @@ section {
     backdrop-filter: blur(10px);
     position: relative;
     overflow: hidden;
+    max-width: 500px;
+    width: 100%;
 }
 
 .team-member::before {
@@ -3019,21 +3083,103 @@ section {
         top: 100%;
         left: 0;
         right: 0;
-        background-color: var(--dark-bg);
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.95) 100%);
+        backdrop-filter: blur(10px);
         flex-direction: column;
-        padding: 1rem;
+        padding: 0.5rem 0;
         gap: 0;
         display: none;
         border-top: 2px solid var(--primary-color);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .nav-links.active {
         display: flex;
+        max-height: 500px;
+        opacity: 1;
+        animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
     
     .nav-links li {
-        padding: 1rem 0;
-        border-bottom: 1px solid var(--border-color);
+        padding: 0;
+        border-bottom: 1px solid rgba(255, 102, 0, 0.1);
+        transform: translateX(-20px);
+        opacity: 0;
+        animation: slideInItem 0.3s ease forwards;
+    }
+    
+    .nav-links.active li {
+        animation: slideInItem 0.4s ease forwards;
+    }
+    
+    .nav-links.active li:nth-child(1) { animation-delay: 0.05s; }
+    .nav-links.active li:nth-child(2) { animation-delay: 0.1s; }
+    .nav-links.active li:nth-child(3) { animation-delay: 0.15s; }
+    .nav-links.active li:nth-child(4) { animation-delay: 0.2s; }
+    .nav-links.active li:nth-child(5) { animation-delay: 0.25s; }
+    .nav-links.active li:nth-child(6) { animation-delay: 0.3s; }
+    .nav-links.active li:nth-child(7) { animation-delay: 0.35s; }
+    
+    @keyframes slideInItem {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    .nav-links li:last-child {
+        border-bottom: none;
+    }
+    
+    .nav-links a {
+        display: block;
+        padding: 1rem 1.5rem;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-links a::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: var(--primary-color);
+        transform: scaleY(0);
+        transition: transform 0.3s ease;
+    }
+    
+    .nav-links a:hover,
+    .nav-links a.active {
+        background: rgba(255, 102, 0, 0.1);
+        color: var(--primary-color);
+        padding-left: 2rem;
+    }
+    
+    .nav-links a:hover::before,
+    .nav-links a.active::before {
+        transform: scaleY(1);
+    }
+    
+    .nav-links a::after {
+        display: none;
     }
     
     .hero-title {
@@ -3120,13 +3266,12 @@ section {
     
     /* Team section mobile */
     .team-section {
-        grid-template-columns: 1fr;
-        gap: 2rem;
         margin: 2.5rem 0;
     }
     
     .team-member {
         padding: 2rem;
+        max-width: 100%;
     }
     
     .team-photo {

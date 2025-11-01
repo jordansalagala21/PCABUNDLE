@@ -89,7 +89,7 @@ function loadCars() {
         const carCard = document.createElement('div');
         carCard.className = 'car-card';
         carCard.innerHTML = `
-            <img src="${car.image}" alt="${car.name}" class="car-image">
+            <img src="${car.image}" alt="${car.name}" class="car-image" loading="lazy">
             <div class="car-info">
                 <h3>${car.name}</h3>
                 <div class="car-details">
@@ -757,6 +757,20 @@ document.addEventListener('DOMContentLoaded', () => {
     loadCars();
     
     // Wait for images and layout to be ready
+    // Add load event listeners to all images for smooth fade-in
+    const images = document.querySelectorAll('img[loading="lazy"]');
+    images.forEach(img => {
+        if (img.complete) {
+            img.classList.add('loaded');
+            img.style.animation = 'none';
+        } else {
+            img.addEventListener('load', function() {
+                this.classList.add('loaded');
+                this.style.animation = 'none';
+            });
+        }
+    });
+    
     if (document.readyState === 'complete') {
         // Page is already fully loaded
         initMobileCarousels();
